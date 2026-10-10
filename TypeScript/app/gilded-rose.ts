@@ -15,7 +15,7 @@ abstract class ItemUpdater {
   constructor(item: Item) {
     this.item = item;
   }
-  abstract updateQuality(): void;
+  abstract update(): void;
 
   protected increaseQuality(amount: number = 1) {
     this.item.quality = Math.min(50, this.item.quality + amount);
@@ -33,21 +33,21 @@ abstract class ItemUpdater {
 // factory
 // subclasses
 class NormalItemUpdater extends ItemUpdater {
-  public updateQuality() {
+  public update() {
     this.decreaseSellIn();
     this.decreaseQuality(this.item.sellIn < 0 ? 2 : 1);
   }
 }
 
 class AgedBrieItemUpdater extends ItemUpdater {
-  public updateQuality() {
+  public update() {
     this.decreaseSellIn();
     this.increaseQuality(this.item.sellIn < 0 ? 2 : 1);
   }
 }
 
 class BackstagePassItemUpdater extends ItemUpdater {
-  public updateQuality() {
+  public update() {
     this.decreaseSellIn();
     if (this.item.sellIn < 0) {
       this.item.quality = 0;
@@ -65,13 +65,20 @@ class BackstagePassItemUpdater extends ItemUpdater {
 }
 
 class SulfurasItemUpdater extends ItemUpdater {
-  public updateQuality() {
+  public update() {
     // Sulfuras does not change in quality or sellIn
   }
 }
 
+class ConjuredItemUpdater extends ItemUpdater {
+  public update() {
+    this.decreaseSellIn();
+    this.decreaseQuality(this.item.sellIn < 0 ? 4 : 2);
+  }
+}
+
 class ItemUpdaterFactory {
-  static createItem(item: Item): ItemUpdater {
+  static createItemUpdater(item: Item): ItemUpdater {
     const { name } = item;
     switch (name) {
       case 'Aged Brie':
@@ -80,6 +87,8 @@ class ItemUpdaterFactory {
         return new BackstagePassItemUpdater(item);
       case 'Sulfuras, Hand of Ragnaros':
         return new SulfurasItemUpdater(item);
+      case 'Conjured Mana Cake':
+        return new ConjuredItemUpdater(item);
       default:
         return new NormalItemUpdater(item);
     }
@@ -94,8 +103,8 @@ export class GildedRose {
 
   updateQuality() {
     this.items.forEach(item => {
-      const itemUpdater = ItemUpdaterFactory.createItem(item);
-      itemUpdater.updateQuality();
+      const itemUpdater = ItemUpdaterFactory.createItemUpdater(item);
+      itemUpdater.update();
     });
 
     return this.items;
