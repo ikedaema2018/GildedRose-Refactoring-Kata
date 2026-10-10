@@ -2,7 +2,7 @@ import { Item, GildedRose } from '@/gilded-rose';
 
 describe('Gilded Rose', () => {
   it('conjured items degrade in quality twice as fast', () => {
-    const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 3, 6), new Item('Conjured Mana Cake', 1, 11)]);
+    const gildedRose = new GildedRose([Item.createItem('Conjured Mana Cake', 3, 6), Item.createItem('Conjured Mana Cake', 1, 11)]);
     let items = gildedRose.updateQuality();
     expect(items[0].name).toBe('Conjured Mana Cake');
     expect(items[0].quality).toBe(4);

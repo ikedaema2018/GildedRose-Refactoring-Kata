@@ -3,16 +3,16 @@ import { Item, GildedRose } from '../app/gilded-rose';
 console.log("OMGHAI!")
 
 const items = [
-  new Item("+5 Dexterity Vest", 10, 20), //
-  new Item("Aged Brie", 2, 0), //
-  new Item("Elixir of the Mongoose", 5, 7), //
-  new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
-  new Item("Sulfuras, Hand of Ragnaros", -1, 80),
-  new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-  new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-  new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+  Item.createItem("+5 Dexterity Vest", 10, 20), //
+  Item.createItem("Aged Brie", 2, 0), //
+  Item.createItem("Elixir of the Mongoose", 5, 7), //
+  Item.createItem("Sulfuras, Hand of Ragnaros", 0, 80), //
+  Item.createItem("Sulfuras, Hand of Ragnaros", -1, 80),
+  Item.createItem("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+  Item.createItem("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+  Item.createItem("Backstage passes to a TAFKAL80ETC concert", 5, 49),
   // this conjured item does not work properly yet
-  new Item("Conjured Mana Cake", 3, 6)];
+  Item.createItem("Conjured Mana Cake", 3, 6)];
 
 
 const gildedRose = new GildedRose(items);
